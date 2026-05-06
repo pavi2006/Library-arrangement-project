@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library Management</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #f2f2f2;
+        }
+
+        h1 {
+            background: #333;
+            color: white;
+            padding: 15px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px;
+            background: purple;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: darkviolet;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px;
+        }
+
+        .book {
+            background: white;
+            padding: 10px;
+            margin: 10px auto;
+            width: 350px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📚 Library Management</h1>
+
+<div class="container">
+
+    <button onclick="showBooks('available')">View Available Books</button>
+    <button onclick="showBooks('lended')">View Lended Books</button>
+    <button onclick="showBooks('reserved')">View Reserved Books</button>
+
+    <h2>Add Book</h2>
+
+    <input type="text" id="title" placeholder="Book Title">
+    <input type="text" id="author" placeholder="Author">
+    <input type="text" id="field" placeholder="Field">
+    <input type="text" id="journal" placeholder="Journal">
+
+    <button onclick="addBook()">ADD BOOK</button>
+
+    <div id="bookList"></div>
+
+</div>
+
+<script>
+const data = {
+    available: [
+        {title:"AI Basics", author:"John", field:"AI", journal:"IEEE"},
+        {title:"ML Guide", author:"Smith", field:"ML", journal:"Springer"},
+        {title:"Data Science", author:"David", field:"DS", journal:"Elsevier"},
+        {title:"Python Book", author:"Anna", field:"Programming", journal:"O'Reilly"},
+        {title:"Cloud Tech", author:"Raj", field:"Cloud", journal:"ACM"},
+        {title:"Big Data", author:"Kumar", field:"Data", journal:"IEEE"},
+        {title:"Cyber Security", author:"Ravi", field:"Security", journal:"Springer"},
+        {title:"IoT Systems", author:"Meena", field:"IoT", journal:"Elsevier"}
+    ],
+
+    lended: [
+        {title:"Deep Learning", author:"Ian", field:"AI", journal:"IEEE"},
+        {title:"Java Guide", author:"James", field:"Programming", journal:"O'Reilly"},
+        {title:"DBMS", author:"Navin", field:"Database", journal:"Springer"},
+        {title:"OS Concepts", author:"Galvin", field:"OS", journal:"Wiley"},
+        {title:"Networks", author:"Tanenbaum", field:"Networking", journal:"Pearson"},
+        {title:"Compiler", author:"Aho", field:"Compiler", journal:"Pearson"},
+        {title:"Algorithms", author:"CLRS", field:"Algo", journal:"MIT"},
+        {title:"Blockchain", author:"Satoshi", field:"Crypto", journal:"IEEE"}
+    ],
+
+    reserved: [
+        {title:"Robotics", author:"Peter", field:"AI", journal:"IEEE"},
+        {title:"AR/VR", author:"John", field:"Graphics", journal:"ACM"},
+        {title:"Quantum Comp", author:"Alice", field:"Quantum", journal:"Nature"},
+        {title:"Bioinformatics", author:"Lee", field:"BioTech", journal:"Springer"},
+        {title:"Game Dev", author:"Mark", field:"Game", journal:"Unity"},
+        {title:"Ethical Hacking", author:"Kevin", field:"Security", journal:"EC-Council"},
+        {title:"5G Tech", author:"Eric", field:"Telecom", journal:"IEEE"},
+        {title:"Edge Computing", author:"Sara", field:"Cloud", journal:"Elsevier"}
+    ]
+};
+
+function showBooks(type) {
+    let list = document.getElementById("bookList");
+    list.innerHTML = `<h2>${type.toUpperCase()} BOOKS</h2>`;
+
+    data[type].forEach(book => {
+        let div = document.createElement("div");
+        div.className = "book";
+
+        div.innerHTML = `
+            <h3>${book.title}</h3>
+            <p><b>Author:</b> ${book.author}</p>
+            <p><b>Field:</b> ${book.field}</p>
+            <p><b>Journal:</b> ${book.journal}</p>
+        `;
+
+        list.appendChild(div);
+    });
+}
+
+function addBook() {
+    let title = document.getElementById("title").value;
+    let author = document.getElementById("author").value;
+    let field = document.getElementById("field").value;
+    let journal = document.getElementById("journal").value;
+
+    if (!title || !author || !field || !journal) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    data.available.push({
+        title: title,
+        author: author,
+        field: field,
+        journal: journal
+    });
+
+    alert("Book added to Available Books!");
+
+    document.getElementById("title").value = "";
+    document.getElementById("author").value = "";
+    document.getElementById("field").value = "";
+    document.getElementById("journal").value = "";
+
+    showBooks("available");
+}
+</script>
+
+</body>
+</html>
